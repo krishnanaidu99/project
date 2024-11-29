@@ -1,0 +1,165 @@
+{% extends "customer/links.html" %}
+
+{% block content %}
+<div class="container text-center text-danger">
+    {% if form.non_field_errors %}
+        <div class="">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+<style>
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+</style>
+{% load static %}
+<script src="{% static 'js/basicform.js' %}"></script>
+<!-- <h2>Loan Application Submitted Successfully!</h2> -->
+    
+    <!-- <p>Thank you for submitting your application.</p> -->
+<div class="container mt-4">
+    <h2 style="text-align: center; background-color: rgb(96, 167, 239); border-radius: 8px;padding: 10px; color: aliceblue;">Basic Detail Application Form</h2>
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_full_name">Full Name</label>
+                    {{ form.full_name }}
+                    {% if form.full_name.errors %}
+                        <div class="error-message">
+                            {% for error in form.full_name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_pan_number">PAN Number</label>
+                    {{ form.pan_number }}
+                    {% if form.pan_number.errors %}
+                        <div class="error-message">
+                            {% for error in form.pan_number.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_gender">Gender</label>
+                    {{ form.gender }}
+                    {% if form.gender.errors %}
+                        <div class="error-message">
+                            {% for error in form.gender.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="error-message">
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_date_of_birth">Date of Birth</label>
+                    {{ form.date_of_birth }}
+                    {% if form.date_of_birth.errors %}
+                        <div class="error-message">
+                            {% for error in form.date_of_birth.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_marital_status">Marital Status</label>
+                    {{ form.marital_status }}
+                    {% if form.marital_status.errors %}
+                        <div class="error-message">
+                            {% for error in form.marital_status.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_required_loan_amount">Required Loan Amount</label>
+                    {{ form.required_loan_amount }}
+                    {% if form.required_loan_amount.errors %}
+                        <div class="error-message">
+                            {% for error in form.required_loan_amount.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-6">
+            <div class="form-check mt-4">
+                {{ form.terms_accepted }}
+                <a><label class="form-check-label" for="id_terms_accepted">Accept Terms and Conditions</label></a>
+                {% if form.terms_accepted.errors %}
+                    <div class="error-message">
+                        {% for error in form.terms_accepted.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3 col-md-8 offset-md-3">Submit</button>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function clearErrorMessages(field) {
+            var parent = field.closest('.form-group');
+            if (parent) {
+                var errorFeedback = parent.querySelector('.error-message');
+                if (errorFeedback) {
+                    errorFeedback.innerHTML = '';
+                }
+            }
+        }
+    
+        var fields = document.querySelectorAll('.form-group input, .form-group select, .form-group textarea');
+        fields.forEach(function(field) {
+            field.addEventListener('input', function() {
+                clearErrorMessages(this);
+            });
+   });
+});
+</script>
+{% endblock %}

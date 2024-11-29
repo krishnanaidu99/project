@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Credit Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .fixed-size-img {
+            width: 150px; 
+            height: 150px; 
+            object-fit: cover; 
+        }
+        
+        .pdf {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+        }
+        
+        .pdf,
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h1,
+        h3 {
+            text-align: center;
+        }
+
+        h1 {
+            color: green;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>View Personal Document</h2>
+        <form method="post" action="{% url 'update_document_detail' document_upload.id %}">
+            {% csrf_token %}
+            
+            <!-- Proof Of Identity -->
+            <div class="form-group">
+                <label for="proof_of_identity">Proof Of Identity</label>
+                <div>
+                    {% if document_upload.proof_of_identity %}
+                        <img src="{{ document_upload.proof_of_identity.url }}" alt="proof_of_identity" class="img-fluid fixed-size-img">
+                    {% else %}
+                        <p>No proof_of_identity image available.</p>
+                    {% endif %}
+                </div>
+                {% if form.proof_of_identity.errors %}
+                    <div class="error-message">
+                        {% for error in form.proof_of_identity.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Proof Of Address -->
+            <div class="form-group">
+                <label for="proof_of_address">Proof Of Address</label>
+                <div>
+                    {% if document_upload.proof_of_address %}
+                        <img src="{{ document_upload.proof_of_address.url }}" alt="proof_of_address" class="img-fluid fixed-size-img">
+                    {% else %}
+                        <p>No proof_of_address image available.</p>
+                    {% endif %}
+                </div>
+                {% if form.proof_of_address.errors %}
+                    <div class="error-message">
+                        {% for error in form.proof_of_address.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Proof Of Income -->
+            <div class="form-group">
+                <label for="proof_of_income">Proof Of Income</label>
+                <div>
+                    {% if document_upload.proof_of_income %}
+                        <img src="{{ document_upload.proof_of_income.url }}" alt="proof_of_income" class="img-fluid fixed-size-img">
+                    {% else %}
+                        <p>No proof_of_income image available.</p>
+                    {% endif %}
+                </div>
+                {% if form.proof_of_income.errors %}
+                    <div class="error-message">
+                        {% for error in form.proof_of_income.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <a href="{% url 'docupdate' document_upload.id %}" class="btn btn-primary">Edit</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<html>
+    {% load static %}
+    <head>
+
+
+<title>Document Upload</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style>
+    .form-section {
+        margin-top: 20px;
+    }
+    .form-section h4 {
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 5px;
+    }
+    .invalid-feedback {
+        display: block;
+        color: red;
+    }
+    
+</style>
+{% load static %}
+<script src="{% static 'js/basicform.js' %}"></script>
+</head>
+
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function clearErrorMessages(field) {
+                var parent = field.closest('.form-group');
+                if (parent) {
+                    var errorFeedback = parent.querySelector('.invalid-feedback');
+                    if (errorFeedback) {
+                        errorFeedback.innerHTML = '';
+                    }
+                }
+            }
+        
+            var fields = document.querySelectorAll('.form-group input, .form-group select, .form-group textarea');
+            fields.forEach(function(field) {
+                field.addEventListener('input', function() {
+                    clearErrorMessages(this);
+                });
+       });
+    });
+    </script>
+    
+    
+<div class="container mt-5">
+    <h2 style="text-align: center;">Gold Loan Application</h2>
+    {% if random_number %}
+    <p style="color: red;">Your Application Number: {{ random_number }}</p>
+    {% endif %}
+
+   
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+
+            <div class="form-group">
+                <label for="id_name">Name<i class="text-danger">*</i></label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_email">Email<i class="text-danger">*</i></label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_state">State<i class="text-danger">*</i></label>
+                    {{ form.state }}
+                    {% if form.state.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.state.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_contact_no">Contact Number<i class="text-danger">*</i></label>
+                    {{ form.contact_no }}
+                    {% if form.contact_no.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.contsct_no.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_pincode">Pincode<i class="text-danger">*</i></label>
+                    {{ form.pincode }}
+                    {% if form.pincode.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.pincode.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                </div>
+                </div>
+               
+                          
+               
+        
+    <center>
+        <button type="submit" class="btn btn-primary">Submit</button></center>&nbsp;&nbsp;
+        <button type="button" class="btn btn-secondary" onclick="window.history.back();">Back</button>
+
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <title>Admin Panel</title>
+  <!-- Add your CSS links or stylesheets here -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    /* Fixed sidenav, full height */
+    .sidenav {
+      height: 100%;
+      width: 170px;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: black;
+      overflow-x: hidden;
+      padding-top: 10px;
+      overflow: hidden;
+      margin-top: 95px;
+    }
+
+    /* Style the sidenav links and the dropdown button */
+    .sidenav a,
+    .dropdown-btn {
+      padding: 6px 8px 6px 16px;
+      text-decoration: none;
+      font-size: 15px;
+      color: white;
+      display: block;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* On mouse-over */
+    .sidenav a:hover,
+    .dropdown-btn:hover {
+      color: #f1f1f1;
+    }
+
+    .main {
+      margin-left: 700px;
+      font-size: 20px;
+      padding: 0px 10px;
+    }
+
+    .active {
+      background-color: gray;
+      color: white;
+    }
+
+    .dropdown-container {
+      display: none;
+      background-color: #262626;
+      padding-left: 8px;
+    }
+
+    /* Optional: Style the caret down icon */
+    .fa-caret-down {
+      float: right;
+      padding-right: 8px;
+      padding-top: 7px
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 120px;
+      right: 0px;
+      z-index: 999;
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+      .toggle-btn {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidenav {
+        width: 0;
+        left: 100px;
+        top: 60px;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .toggle-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="toggle-btn" onclick="toggleSidebar()">&#9776;</button>
+
+  <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container">
+      <a href="{% url 'index' %}"><h5 class="navbar-brand">Admin Panel</h5></a>
+      <!-- <a href="">
+        <img src="" alt="" style="height: 70px; width: 150px;">
+      </a> -->
+      <div class="navbar-nav">
+        <button class="dropdown-btn">My Profile</button>
+        <div class="dropdown-container">
+        <h6 style="color: #f1f1f1;">UserName :{{user.get_username}}</h6>
+        <h6 style="color:#f1f1f1;"> Email Id :{{ user.email }}</h6>
+        <a href="" style="text-decoration: none;"><h6 style="color:#f1f1f1;">Change Password</h6></a>
+        </div>
+    
+        
+
+        <a class="nav-link" href="{% url 'login' %}" onclick="return confirm('Are you sure you want to logout')" style="margin-left: 20px;">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    function toggleSidebar() {
+      var navbar = document.querySelector('.navbar');
+      var toggleBtn = document.querySelector('.toggle-btn');
+      if (navbar.classList.contains('collapsed')) {
+        navbar.classList.remove('collapsed');
+        toggleBtn.innerHTML = "&#9776;";
+      } else {
+        navbar.classList.add('collapsed');
+        toggleBtn.innerHTML = "&times;";
+      }
+    }
+  </script>
+  <!-- ====================sidebar========================== -->
+  <div class="sidenav" id="sidebar">
+    <a href="">Dashboard</a>
+    <button class="dropdown-btn">HR Management
+      <i class="fa fa-caret-down"></i>
+    </button>
+  
+
+    <button class="dropdown-btn">LOANS
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <a href="{% url 'personal_detail_list' %}">Personal loans</a>
+      <a href="{% url 'customer_profile_list' %}">Home loans</a>
+      <a href="{% url 'business_loan_list' %}">Business loans</a>
+      <a href="{% url 'loan_records' %}">Educational loans</a>
+      <a href="{% url 'car_loan_list' %}">Cars loans</a>
+      <a href="{% url 'lapview' %}">LAP loans</a>
+      <a href="{% url 'goldview' %}">Gold loans</a>
+      <a href="#">Other loans</a>
+    </div>
+
+    <button class="dropdown-btn">creditcard
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <a href="{% url 'creditappli_view' %}">Creditcard view</a>
+      <!-- <a href="">Add here </a> -->
+    </div>
+
+    <button class="dropdown-btn">Insurance
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <a href="{% url 'insuranceview' %}">AllInsurance</a>
+      <a href="{% url 'insurancelifeview' %}">LifeInsurance</a>
+      <a href="{% url 'insurancegenview' %}">GeneralInsurance</a>
+      <a href="{% url 'insurancehealthview' %}">HealthInsurance</a>
+      <!-- <a href="">Add here </a> -->
+    </div>
+
+    
+
+  </div>
+<h1 style="text-align: center;">welcome to SLN FINSERV</h1>
+  <div class="container my-3">
+    {% block content %}{% endblock %}
+  </div>
+  <script>
+    function toggleSidebar() {
+      var sidebar = document.getElementById("sidebar");
+      if (sidebar.style.width === "250px") {
+        sidebar.style.width = "0";
+      } else {
+        sidebar.style.width = "250px";
+      }
+    }
+  </script>
+  <!-- Add your JavaScript links or scripts here -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.1/umd/popper.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote-bs4.js'></script>
+  <script src="./script.js"></script>
+
+  <script>
+    //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+      dropdown[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var dropdownContent = this.nextElementSibling;
+        if (dropdownContent.style.display === "block") {
+          dropdownContent.style.display = "none";
+        } else {
+          dropdownContent.style.display = "block";
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>
