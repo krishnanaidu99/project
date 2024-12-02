@@ -2,77 +2,47 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "your-dockerhub-username/your-django-app" // Replace with your Docker Hub username and app name
-        DOCKER_REGISTRY_CREDENTIALS = "docker-credentials-id"    // Jenkins credentials ID for Docker Hub
+        GIT_REPO = 'https://github.com/krishnanaidu99/project.git' // Git repository URL
+        BRANCH = 'main'                                           // Branch to checkout
+        DOCKER_IMAGE_NAME = 'dockerfile'                    // Name of the Docker image
+        DOCKER_CONTAINER_NAME = 'vv'            // Name of the Docker container
+        PORT_MAPPING = '8000:8000'                                // Port mapping
+        WORKDIR = "${WORKSPACE}"                                  // Jenkins workspace
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                echo "Checking out code from SCM..."
-                checkout scm
+                // Clone the repository
+             git branch: 'main', url: 'https://github.com/krishnanaidu99/project.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                echo "Building Docker image..."
                 script {
-                    sh "docker build -t ${DOCKER_IMAGE}:latest ."
+                    // Build the Docker image
+                    echo "Building Docker image: ${dockerfile}..."
+                    sh "docker build -t ${dockerfile} ${WORKDIR}"
                 }
             }
         }
 
-        stage('Test Application') {
+        stage('Deploy Docker Container') {
             steps {
-                echo "Running tests..."
                 script {
-                    sh "docker run --rm ${DOCKER_IMAGE}:latest python manage.py test"
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                echo "Pushing Docker image to registry..."
-                script {
-                    withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
-                    }
-                    sh "docker push ${DOCKER_IMAGE}:latest"
-                }
-            }
-        }
-
-        stage('Deploy Application') {
-            steps {
-                echo "Deploying the application..."
-                script {
-                    // Stop and remove the old container if it exists
-                    sh "docker rm -f django-app || true"
-
-                    // Run the new container
+                    // Stop and remove any existing container
+                    echo "Stopping and removing any existing container named ${vv}..."
                     sh """
-                    docker run -d --name django-app -p 8000:8000 \
-                    ${DOCKER_IMAGE}:latest
+                        if [ \$(docker ps -aq -f name=${vv}) ]; then
+                            docker rm -f ${vv}
+                        fi
                     """
+                    // Run the Docker container
+                    echo "Deploying container ${sln}..."
+                    sh "docker run -d --name ${sln} -p 8000:8000 ${dockerfile}"
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            echo "Cleaning up dangling Docker images..."
-            script {
-                sh "docker image prune -f"
-            }
-        }
-        success {
-            echo "Pipeline completed successfully!"
-        }
-        failure {
-            echo "Pipeline failed. Please check the logs."
         }
     }
 }
