@@ -6,7 +6,7 @@ pipeline {
         BRANCH = 'main'                                           // Branch to checkout
         DOCKER_IMAGE_NAME = 'project_image'                       // Name of the Docker image
         DOCKER_CONTAINER_NAME = 'project_container'               // Name of the Docker container
-        PORT_MAPPING = '8000:8000'                                // Port mapping
+        PORT_MAPPING = '9000:7000'                                // Port mapping
         WORKDIR = "${WORKSPACE}"                                  // Jenkins workspace
     }
 
